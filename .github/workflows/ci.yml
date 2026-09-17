@@ -9,13 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Deterministic regression oracle
+      - name: Deterministic regression oracle v2
         shell: bash
         run: |
           echo "VM3_HEAD=${{ github.event.pull_request.head.sha }}"
           echo "VM3_BASE=${{ github.base_ref }}"
-          if [ -f bug.txt ] && [ ! -f fix.txt ]; then
-            echo 'VM3_DETERMINISTIC_REGRESSION=FAIL'
+          if [ -f bug2.txt ] && [ ! -f fix2.txt ]; then
+            echo 'VM3_BAD_INTERMEDIATE_DELAY=60s'
+            sleep 60
+            echo 'VM3_DETERMINISTIC_REGRESSION_V2=FAIL'
             exit 1
           fi
-          echo 'VM3_DETERMINISTIC_REGRESSION=PASS'
+          echo 'VM3_DETERMINISTIC_REGRESSION_V2=PASS'
