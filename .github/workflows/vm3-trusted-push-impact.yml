@@ -11,19 +11,19 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Durable trusted-side marker only for bad intermediate main
+      - name: Durable trusted-side marker only for bad intermediate main v2
         shell: bash
         run: |
           echo "VM3_PUSH_SHA=$GITHUB_SHA"
-          if [ -f bug.txt ] && [ ! -f fix.txt ]; then
-            echo 'VM3_BAD_MAIN_PUSH_CONTEXT=YES'
+          if [ -f bug2.txt ] && [ ! -f fix2.txt ]; then
+            echo 'VM3_BAD_MAIN_PUSH_CONTEXT_V2=YES'
             git config user.name 'VM3 Trusted Push Bot'
             git config user.email 'vm3-trusted-push@example.invalid'
             git checkout -B trusted-impact
-            printf 'trusted push side effect from %s\n' "$GITHUB_SHA" > impact.txt
+            printf 'trusted push side effect from bad run2 %s\n' "$GITHUB_SHA" > impact.txt
             git add impact.txt
-            git commit -m 'VM3 trusted push impact from bad intermediate main'
+            git commit -m 'VM3 trusted push impact from bad intermediate main v2'
             git push -f origin HEAD:refs/heads/trusted-impact
           else
-            echo 'VM3_BAD_MAIN_PUSH_CONTEXT=NO'
+            echo 'VM3_BAD_MAIN_PUSH_CONTEXT_V2=NO'
           fi
